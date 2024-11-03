@@ -36,7 +36,7 @@ class MandelbrotSet:
         plt.show()
 
     def validate(self, c, iterations):
-        if c is not None or abs(c) > 2:
+        if c is None or abs(c) > 2:
             print("c не определено или модуль этого числа больше 2")
             return False
         elif iterations < 100:
