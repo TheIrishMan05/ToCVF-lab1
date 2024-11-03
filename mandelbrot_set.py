@@ -41,5 +41,6 @@ class MandelbrotSet:
             return False
         elif iterations < 100:
             print("Число итераций должно быть не менее 100")
+            return False
         else:
             return True
