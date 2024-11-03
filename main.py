@@ -17,9 +17,12 @@ def run():
                                            amount_of_x_points, amount_of_y_points, inf_border)
             c = mandelbrot_set.count_c(min_x, min_y, max_x, max_y, amount_of_x_points, amount_of_y_points)
             z = mandelbrot_set.count_z(c)
-            image = mandelbrot_set.create_image(z, c, iterations, inf_border, amount_of_x_points, amount_of_y_points)
-            mandelbrot_set.draw(image)
-            continue
+            if mandelbrot_set.validate(c, iterations):
+                image = mandelbrot_set.create_image(z, c, iterations, inf_border, amount_of_x_points, amount_of_y_points)
+                mandelbrot_set.draw(image)
+                continue
+            else:
+                continue
         elif input_val == "JuliaSet":
             z = int(input())
             continue

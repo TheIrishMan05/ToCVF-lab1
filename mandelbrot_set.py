@@ -39,5 +39,7 @@ class MandelbrotSet:
         if c is not None and abs(c) > 2:
             print("c не определено или модуль этого числа больше 2")
             return False
-        if iterations < 100:
+        elif iterations < 100:
             print("Число итераций должно быть не менее 100")
+        else:
+            return True
