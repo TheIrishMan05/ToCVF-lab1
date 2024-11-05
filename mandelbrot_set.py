@@ -69,6 +69,7 @@ class MandelbrotSet:
     def count_c(self, min_x, min_y, max_x, max_y, amount_x_points, amount_y_points):
         x, y = np.mgrid[min_x:max_x:(amount_x_points * 1j), min_y:max_y:(amount_y_points * 1j)]
         return x + y * 1j
+
     def count_z(self, c):
         if np.abs(c.all()) > 2:
             raise ValueError("Нарушено свойство: |c| <= 2, точки с |c| > 2 не лежат в множестве Мандельборта")

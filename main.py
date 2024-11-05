@@ -1,4 +1,6 @@
+from koch_snowflake import KochSnowflake
 from mandelbrot_set import MandelbrotSet
+import turtle
 
 
 def run():
@@ -20,16 +22,25 @@ def run():
                                            mandelbrot_set.get_amount_x_points(), mandelbrot_set.get_amount_y_points())
                 z = mandelbrot_set.count_z(c)
                 image = mandelbrot_set.create_image(z, c, mandelbrot_set.get_iterations(),
-                                                        mandelbrot_set.get_inf_border(),
-                                                        mandelbrot_set.get_amount_x_points(),
-                                                        mandelbrot_set.get_amount_y_points())
+                                                    mandelbrot_set.get_inf_border(),
+                                                    mandelbrot_set.get_amount_x_points(),
+                                                    mandelbrot_set.get_amount_y_points())
                 mandelbrot_set.draw(image)
                 continue
             elif input_val == "JuliaSet":
                 pass
                 continue
             elif input_val == "KochSnowflake":
-                pass
+                koch_snowflake = KochSnowflake()
+                koch_snowflake.set_t(turtle.Turtle())
+                koch_snowflake.set_ln(float(input("Введите длину линейного сегмента: ")))
+                iterations = int(input("Введите количество итераций: "))
+                koch_snowflake.get_t().ht()
+                koch_snowflake.get_t().speed(1000)
+                for _ in range(iterations):
+                    koch_snowflake.draw_koch_segment(koch_snowflake.get_t(), koch_snowflake.get_ln())
+                    koch_snowflake.get_t().left(120)
+                turtle.done()
                 continue
         except ValueError as ve:
             print("Oops! Error has occured: " + str(ve))
