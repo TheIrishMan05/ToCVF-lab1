@@ -45,19 +45,17 @@ def run():
                 fps = 30
                 clock = pygame.time.Clock()
                 julia_set.set_center(complex(float(input("Введите Re(c): ")), float(input("Введите Im(z): "))))
-                julia_set.set_p(int(input("Введите размер изображения: ")))
                 julia_set.set_scale_c(float(input("Введите коэффициент масштабирования: ")))
                 julia_set.set_iterations(int(input("Введите количество итераций: ")))
                 julia_set.set_x_view(int(input("Введите координату x для смещения обзора: ")))
                 julia_set.set_y_view(int(input("Введите координату y для смещения обзора: ")))
-                julia_set.draw_points(julia_set.get_p(), julia_set.get_sc(), julia_set.get_iterations(),
+                julia_set.draw_points(julia_set.get_sc(), julia_set.get_iterations(),
                                       julia_set.get_scale_c(), julia_set.get_x_view(), julia_set.get_y_view(),
                                       julia_set.get_center())
                 while True:
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
                             exit()
-                    # pygame.display.update()
                     clock.tick(fps)
             elif input_val == "KochSnowflake":
                 koch_snowflake = KochSnowflake()

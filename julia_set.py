@@ -6,7 +6,6 @@ class JuliaSet:
     __iterations = None
     __x_view = None
     __y_view = None
-    __p = None
     __sc = None
     __scale_c = None
 
@@ -37,12 +36,6 @@ class JuliaSet:
     def get_y_view(self):
         return self.__y_view
 
-    def set_p(self, p):
-        self.__p = p
-
-    def get_p(self):
-        return self.__p
-
     def set_sc(self, sc):
         self.__sc = sc
 
@@ -55,11 +48,12 @@ class JuliaSet:
     def get_scale_c(self):
         return self.__scale_c
 
-    def draw_points(self, p, sc, iterations, scale_c, x_view, y_view, c):
-        scale = p / scale_c
+    def draw_points(self, sc, iterations, scale_c, x_view, y_view, c):
+        width, height = sc.get_size()
+        scale = min(width, height) / scale_c
         view = (x_view, y_view)
-        for y in range(-p + view[1], p + view[1]):
-            for x in range(-p + view[0], p + view[0]):
+        for y in range(-height // 2 + view[1], height // 2 + view[1]):
+            for x in range(-width // 2 + view[0], width // 2 + view[0]):
                 a = x / scale
                 b = y / scale
                 z = complex(a, b)
@@ -76,6 +70,6 @@ class JuliaSet:
                     g = (n % 4) * 64
                     b = (n % 2) * 16 + 128
 
-                pygame.draw.circle(sc, (r, g, b), (x + p - view[0], y + p - view[1]), 1)
+                pygame.draw.circle(sc, (r, g, b), (x + width // 2 - view[0], y + height // 2 - view[1]), 1)
 
-        pygame.display.update()
+        pygame.display.flip()
