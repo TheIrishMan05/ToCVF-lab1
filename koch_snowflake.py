@@ -42,3 +42,6 @@ class KochSnowflake:
             t.fd(ln)
             t.left(60)
             t.fd(ln)
+
+    def reverse_draw(self, t):
+        t.left(120)

@@ -1,28 +1,81 @@
-import matplotlib as plt
+import pygame
 
 
 class JuliaSet:
     __center = None
     __iterations = None
-    __start_range = None
-    __min_x = None
-    __max_x = None
-    __min_y = None
-    __points_x = None
-    __points_y = None
+    __x_view = None
+    __y_view = None
+    __p = None
+    __sc = None
+    __scale_c = None
 
     def __init__(self):
-        print("Создан экземпляр класса JuliaSet")
+        print("Создан экземпляр класса множества Жюлиа")
 
-    def set_min_x(self, min_x):
-        self.__min_x = min_x
+    def get_iterations(self):
+        return self.__iterations
 
-    def get_min_x(self):
-        return self.__min_x
+    def set_iterations(self, iterations):
+        self.__iterations = iterations
 
-    def set_max_x(self, max_x):
-        self.__max_x = max_x
+    def set_center(self, center):
+        self.__center = center
 
-    def get_max_x(self):
-        return self.__max_x
+    def get_center(self):
+        return self.__center
 
+    def set_x_view(self, x_view):
+        self.__x_view = x_view
+
+    def get_x_view(self):
+        return self.__x_view
+
+    def set_y_view(self, y_view):
+        self.__y_view = y_view
+
+    def get_y_view(self):
+        return self.__y_view
+
+    def set_p(self, p):
+        self.__p = p
+
+    def get_p(self):
+        return self.__p
+
+    def set_sc(self, sc):
+        self.__sc = sc
+
+    def get_sc(self):
+        return self.__sc
+
+    def set_scale_c(self, scale_c):
+        self.__scale_c = scale_c
+
+    def get_scale_c(self):
+        return self.__scale_c
+
+    def draw_points(self, p, sc, iterations, scale_c, x_view, y_view, c):
+        scale = p / scale_c
+        view = (x_view, y_view)
+        for y in range(-p + view[1], p + view[1]):
+            for x in range(-p + view[0], p + view[0]):
+                a = x / scale
+                b = y / scale
+                z = complex(a, b)
+                n = 0
+                for n in range(iterations):
+                    z = z ** 2 + c
+                    if abs(z) > 2:
+                        break
+
+                if n == iterations - 1:
+                    r = g = b = 0
+                else:
+                    r = (n % 2) * 32 + 128
+                    g = (n % 4) * 64
+                    b = (n % 2) * 16 + 128
+
+                pygame.draw.circle(sc, (r, g, b), (x + p - view[0], y + p - view[1]), 1)
+
+        pygame.display.update()
