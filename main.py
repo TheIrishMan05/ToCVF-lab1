@@ -1,9 +1,7 @@
 from koch_snowflake import KochSnowflake
 from mandelbrot_set import MandelbrotSet
-from julia_set import JuliaSet
 import turtle
 import pygame
-import os
 
 
 def run():
@@ -31,32 +29,40 @@ def run():
                 mandelbrot_set.draw(image)
                 continue
             elif input_val == "JuliaSet":
-                julia_set = JuliaSet()
-                white = (255, 255, 255)
-                x = 20
-                y = 40
-                os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (x, y)
+                width, height = 800, 800
                 pygame.init()
-                w = 1200
-                h = 800
-                julia_set.set_sc(pygame.display.set_mode((w, h)))
-                pygame.display.set_caption("Множества Жюлиа")
-                julia_set.get_sc().fill(white)
-                fps = 30
-                clock = pygame.time.Clock()
-                julia_set.set_center(complex(float(input("Введите Re(c): ")), float(input("Введите Im(z): "))))
-                julia_set.set_scale_c(float(input("Введите коэффициент масштабирования: ")))
-                julia_set.set_iterations(int(input("Введите количество итераций: ")))
-                julia_set.set_x_view(int(input("Введите координату x для смещения обзора: ")))
-                julia_set.set_y_view(int(input("Введите координату y для смещения обзора: ")))
-                julia_set.draw_points(julia_set.get_sc(), julia_set.get_iterations(),
-                                      julia_set.get_scale_c(), julia_set.get_x_view(), julia_set.get_y_view(),
-                                      julia_set.get_center())
-                while True:
+                screen = pygame.display.set_mode((width, height))
+                pygame.display.set_caption("Множество Жюлиа")
+
+                center = complex(-1, 0)
+                zoom = 1
+                move_x, move_y = 0, 0
+                max_iter = 300
+
+                def julia(x, y, j_c):
+                    j_z = complex(x, y)
+                    for i in range(max_iter):
+                        j_z = j_z * j_z + j_c
+                        if abs(z) > 2:
+                            return i
+                    return max_iter
+
+                running = True
+                while running:
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
-                            exit()
-                    clock.tick(fps)
+                            running = False
+
+                    for cx in range(width):
+                        for cy in range(height):
+                            zx = 1.5 * (cx - width / 2) / (0.5 * zoom * width) + move_x
+                            zy = (cy - height / 2) / (0.5 * zoom * height) + move_y
+                            color = julia(zx, zy, center)
+                            screen.set_at((cx, cy), (color % 8 * 32, color % 16 * 16, color % 32 * 8))
+
+                    pygame.display.flip()
+
+                pygame.quit()
             elif input_val == "KochSnowflake":
                 koch_snowflake = KochSnowflake()
                 koch_snowflake.set_t(turtle.Turtle())
